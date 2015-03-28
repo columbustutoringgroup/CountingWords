@@ -1,17 +1,26 @@
-contents = File.open("speech.txt", "rb").read
+class Histogram
+  attr_accessor :contents, :result
 
-def werd_counter(contents)
-  #remove line breaks and period doesn't handle contractions well... assumes case well and we'll are same word.
-  all_words = contents.gsub(/ *\n+/, ' ').gsub('\'', '').gsub('.', ' ').gsub(/[^a-zA-Z ]/,'').downcase.split
+  def initialize(file_name)
+    @contents = File.read(file_name)
+    @contents = @contents.gsub(/ *\n+/, ' ').gsub('\'', '').gsub('.', ' ').gsub(/[^a-zA-Z ]/,'').downcase.split
+    @result = word_counter
+  end
 
-  # create hash to store results of frequency
-  hash = Hash.new(0)
+  def word_counter
+    # create hash to store results of frequency
+    result = Hash.new(0)
 
-  all_words.each { |word| hash[word] += 1 }
+    @contents.each{ |word| result[word] += 1 }
+    result
+  end
 
-  result = hash.sort_by{|k, v| v}.reverse.to_h
+  def to_s
+    string = ""
+    @result.sort_by{|k, v| v}.reverse.each{|k,v| string << "#{v} - #{k} \n" }
+    string
+  end
 end
 
-puts werd_counter(contents)
-
-werd_counter(contents).each{|k,v| puts v.to_s + " - " + k }
+histogram = Histogram.new("speech.txt")
+puts histogram
