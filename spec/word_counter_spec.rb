@@ -42,6 +42,16 @@ describe WordCounter do
       }
     end # words are sorted correctly when the first word does not occur most
 
+    context 'contraction words are included' do
+      Given(:contractions) { ["Don't", "Shouldn't", "Won't"] }
+      Given(:test_words) {
+        contractions.join(" ")
+      }
+      Then {
+        result.keys.sort == contractions.map(&:downcase).sort
+      }
+    end
+
     context 'words with underscores are' do
 
       examples = {
