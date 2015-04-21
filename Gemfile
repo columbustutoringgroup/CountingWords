@@ -3,4 +3,5 @@ ruby "2.2.2"
 
 gem 'pry'
 gem 'rspec-given'
+gem 'thor'
 

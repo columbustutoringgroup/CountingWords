@@ -28,6 +28,7 @@ GEM
     rspec-support (3.2.2)
     slop (3.6.0)
     sorcerer (1.0.2)
+    thor (0.19.1)
 
 PLATFORMS
   ruby
@@ -35,3 +36,4 @@ PLATFORMS
 DEPENDENCIES
   pry
   rspec-given
+  thor
