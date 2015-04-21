@@ -42,5 +42,26 @@ describe WordCounter do
       }
     end # words are sorted correctly when the first word does not occur most
 
+    context 'words with underscores are' do
+
+      examples = {
+        'begins with an underscore' => '_test',
+        'ends with an underscore'   => 'test_',
+        'has underscores within the word' => 'test_words'
+      }
+
+      examples.each_pair do |example, word|
+        context "included if the word #{example}" do
+          Given(:test_words) { word }
+          Then { result.has_key? word }
+        end
+      end
+
+      context 'not included if the _ is proceeded by special characters' do
+        Given(:test_words) { "_+{}:\"?><<..," }
+        Then { result.empty? }
+      end
+    end
+
   end # .count_words
 end
