@@ -3,8 +3,13 @@ class Histogram
 
   def initialize(file_name)
     @contents = File.read(file_name)
-    @contents = @contents.gsub(/ *\n+/, ' ').gsub('\'', '').gsub('.', ' ').gsub(/[^a-zA-Z ]/,'').downcase.split
+    @contents = remove_white_space_and_punc
+    @contents = @contents.downcase.split
     @result = word_counter
+  end
+
+  def remove_white_space_and_punc
+    @contents.gsub(/ *\n+/, ' ').gsub('\'', '').gsub('.', ' ')
   end
 
   def word_counter
