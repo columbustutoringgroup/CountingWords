@@ -17,7 +17,7 @@ class Counter
     all_words = text.scan(/((?:\w+|\')+)/).flatten.map { |x| x.downcase }
 
     mapping = Hash.new
-    all_words.uniq.map {|x| mapping[x] = all_words.count(x) }
+    all_words.uniq.each {|x| mapping[x] = all_words.count(x) }
     mapping
   end
 
