@@ -10,6 +10,8 @@ class Counter
     print_descending(word_hash)
   end
 
+  private
+
   # Splits the text into a hash of words and counts
   def split_text(text)
     all_words = text.scan(/((?:\w+|\')+)/).flatten.map { |x| x.downcase }
