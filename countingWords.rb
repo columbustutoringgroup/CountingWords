@@ -25,6 +25,10 @@ words.each do |w|
 	wordCount[w] ? wordCount[w] += 1 : wordCount[w] = 1
 end
 
+# Delete the entry for the underscore and delete the blank entry
+wordCount.delete("")
+wordCount.delete("_")
+
 # Sort by count, from highest to lowest
 wordCount = wordCount.sort {|a,b| a[1] <=> b[1]}
 wordCount.reverse!
