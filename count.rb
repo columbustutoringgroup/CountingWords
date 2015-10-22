@@ -25,8 +25,8 @@ class WordCount
   end
 
   def report
-    sorted_words = @counted_words.sort_by { |word, count| count }
-    sorted_words.reverse_each do |word, count|
+    sorted_words = @counted_words.sort_by { |word, count| -count }
+    sorted_words.each do |word, count|
         puts count.to_s + ' - ' + word
     end
   end
