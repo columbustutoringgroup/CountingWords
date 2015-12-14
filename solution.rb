@@ -2,7 +2,7 @@ TEXT = File.read('speech.txt')
 
 
 class WordCounter
-  @@WORDS_REGEX = /\w+[a-z']*/
+  WORDS_REGEX = /\w+[a-z']*/
 
   def self.solve text
     words = find_words TEXT
@@ -12,7 +12,7 @@ class WordCounter
   end
 
   def self.find_words text
-    text.downcase.scan @@WORDS_REGEX
+    text.downcase.scan WORDS_REGEX
   end
 
   def self.count_words words_array
