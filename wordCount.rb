@@ -3,7 +3,7 @@ class WordCounter
   def initialize(file)
     @file = file
     @input = ""
-    @output = {}
+    @output =  Hash.new(0)
   end
 
   def parse
@@ -19,11 +19,7 @@ class WordCounter
   def count(input)
     input = input.split
     input.each do |word|
-      if @output[word] == nil
-        @output[word] = 1
-      else
-        @output[word] += 1
-      end
+      @output[word] += 1
     end
   end
 end
