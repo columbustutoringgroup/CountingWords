@@ -1,14 +1,13 @@
 class WordCounter
-  attr_accessor :file, :output
+  attr_accessor :file, :input, :output
   def initialize(file)
     @file = file
+    @input = ""
     @output = {}
-    self.read
   end
 
-  def read
-    File.foreach(@file) {|x| self.count(x)}
-    self.print
+  def parse
+    File.foreach(@file) {|x| count(x)}
   end
 
   def count(input)
@@ -25,8 +24,10 @@ class WordCounter
 
   def print
     @output = @output.sort_by {|key, value| value}
-    @output.each {|key, value| puts "#{key} - #{value}"}
+    @output.each {|key, value| puts "#{value} - #{key}"}
   end
 end
 
-WordCounter.new("speech.txt")
+program = WordCounter.new("speech.txt")
+program.parse
+program.print
