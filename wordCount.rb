@@ -10,6 +10,12 @@ class WordCounter
     File.foreach(@file) {|x| count(x)}
   end
 
+  def print
+    @output = @output.sort_by {|key, value| value}
+    @output.each {|key, value| puts "#{value} - #{key}"}
+  end
+
+  private
   def count(input)
     input = input.split
     input.each do |word|
@@ -19,12 +25,6 @@ class WordCounter
         @output[word] += 1
       end
     end
-  end
-
-
-  def print
-    @output = @output.sort_by {|key, value| value}
-    @output.each {|key, value| puts "#{value} - #{key}"}
   end
 end
 
