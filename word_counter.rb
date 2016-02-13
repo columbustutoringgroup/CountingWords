@@ -3,6 +3,8 @@ class WordCounter
     raise 'WordCounter: no file given' unless file 
     # use inject to create a hash of word counts
     to_word_array(file).inject({}) { |h,w| h[w] ? h[w] += 1 : h[w] = 1; h }
+                       .sort_by { |k,v| v }
+                       .reverse
   end
 
   private
