@@ -19,9 +19,9 @@ module WordParser
   end
 
   def self.counted(array)
-    word_hash = {}
+    word_hash = Hash.new(0)
     array.each do |word|
-      word_hash[word] ? word_hash[word] += 1 : word_hash[word] = 1
+      word_hash[word] += 1
     end
     word_hash.sort_by { |word, count| count }.reverse
   end
