@@ -3,7 +3,7 @@ class WordCounter
   end
 
   def count(text)
-    parsed = text.downcase.gsub(/[^\w\s\n']+/, '').gsub(/[\n\s]+/, ' ').strip
+    parsed = text.downcase.gsub(/(?:[^\w\s\n'\-]|(?<=[^a-z])\-|\-(?=[^a-z]))+/, '').gsub(/[\n\s]+/, ' ').strip
     words = parsed.split(' ')
 
     list = {}
