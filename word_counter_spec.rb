@@ -15,10 +15,20 @@ describe WordCounter do
     end
   end
 
-  describe '#count' do
-    it 'returns an array of words and their counts' do
+  describe '#count_from_file' do
+    it 'returns an array of words and their counts (given a file)' do
       expect(counter.count_from_file('example.txt')).to eq(example_parsed)
       expect(counter.count_from_file('speech.txt')).to eq(speech_parsed)
+    end
+  end
+
+  describe '#count' do
+    it 'returns an array of words and their counts (given a string)' do
+      example_text = File.open('example.txt', 'r') { |f| f.read }
+      expect(counter.count(example_text)).to eq(example_parsed)
+
+      speech_text = File.open('speech.txt', 'r') { |f| f.read }
+      expect(counter.count(speech_text)).to eq(speech_parsed)
     end
   end
 end
