@@ -20,5 +20,5 @@ sorted_counts = word_counts.sort_by {|_key, value| value}
 ascended = sorted_counts.reverse
 
 ascended.each do |pair|
-	puts "#{pair[0]}: #{pair[1]}"
+	puts "#{pair[1]} - #{pair[0]}"
 end
