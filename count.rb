@@ -17,7 +17,7 @@ class Counter
     end
 
     # Reverse our order, show the most frequently typed words first
-    word_count = word_count.sort_by{ |k, v| v}.reverse!
+    word_count = word_count.sort_by{ |k, v| v }.reverse!
     puts word_count
   end
 end
