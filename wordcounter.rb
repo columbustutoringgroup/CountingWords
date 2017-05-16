@@ -6,7 +6,7 @@ class Counter
     @dictionary = {}
   end
 
-  def read
+  def populate_dictionary
     text_file = File.open(@filepath)
     contents = text_file.read
     words_array = contents.split(' ')
@@ -15,15 +15,16 @@ class Counter
       # check for whitespace characters to prevent adding them to the hash
       word !~ /^\s*$/ && @dictionary.key?(word) ? @dictionary[word] += 1 : @dictionary.store(word, 1)
     end
+    @dictionary.sort_by { |_k, v| v }.reverse!
   end
 
   def display
-    @dictionary.sort_by { |_k, v| v }.reverse!.each do |key, pair|
+    @dictionary.each do |key, pair|
       puts "#{pair.to_s.rjust(3)} - #{key}"
     end
   end
 end
 
 counter = Counter.new('speech.txt')
-counter.read
+counter.populate_dictionary
 counter.display
