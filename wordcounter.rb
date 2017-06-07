@@ -23,5 +23,3 @@ class Counter
     end
   end
 end
-
-#Counter.new.printCount("./speech.txt")
