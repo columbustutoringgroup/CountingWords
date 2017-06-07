@@ -42,11 +42,11 @@ describe 'WordHistogram' do
     histogram
   end
 
-  it 'should default to a word frequency of 0' do
+  it 'defaults to a word frequency of 0' do
     expect(hist['a']).to eq 0
   end
 
-  it 'should allow frequency updates like a Hash' do
+  it 'allows frequency updates by behaving like a Hash' do
     hist[:a] += 1
     hist[:b] += 4
     hist[:z] += rand(1..100)
@@ -55,24 +55,24 @@ describe 'WordHistogram' do
     expect(hist[:z]).not_to be_zero
   end
 
-  it 'should be sortable' do
+  it 'is sortable' do
     expect { hist.send(:sort) }.not_to raise_error
   end
 
-  it 'should sort into an array' do
+  it 'sorts into an array' do
     expect(hist.send(:sort)).to be_a(Array)
   end
 
-  it 'should return a properly sorted array when sorted' do
+  it 'returns a properly sorted array when sorted' do
     result = long_hist.send(:sort)
     expect(result).to match_array [ ['hello', 6], ['jella', 5], ['jello', 3], ['jellq', 3], ['jelly', 3] ]
   end
 
-  it 'should create a pretty string from itself' do
+  it 'creates a pretty string from itself' do
     expect(short_hist.to_pretty_s).to be_a(String)
   end
 
-  it 'should be able to provide a prettily formatted table' do
+  it 'is able to provide a prettily formatted table' do
     result = short_hist.to_pretty_s
     to_result_line = lambda { |rank, word, freq| '%-3d: %-2s %-3d' % [rank, word, freq] }
 
@@ -93,22 +93,22 @@ describe 'WordCounter' do
   subject(:speech_path) { 'speech.txt' }
   subject(:simple_test_path) { 'simple_test.txt' }
 
-  it 'should remove all hyphens' do
+  it 'removes all hyphens' do
     result = counter.send(:drop_word_joiners, '-hyphens-in-my-sentence and stuff.')
     expect(result).not_to include('-')
   end
 
-  it 'should remove all underscores' do
+  it 'removes all underscores' do
     result = counter.send(:drop_word_joiners, '_secret_variable_in_python')
     expect(result).not_to include('_')
   end
 
-  it 'should remove all conjunctions' do
+  it 'removes all conjunctions' do
     result = counter.send(:drop_conjunctions, "didn't do nothin'")
     expect(result).to eq "didnt do nothin'"
   end
 
-  it 'should remove nonword characters' do
+  it 'removes nonword characters' do
     result = counter.send(:drop_nonwords, '_+{}:"?><<..,It is therefore')
 
     # We don't care about whitespace, only non-whitespace characters left.
@@ -120,29 +120,29 @@ describe 'WordCounter' do
   end
 
   context 'when counting words in sentences' do
-    it 'should return a histogram' do
+    it 'returns a histogram' do
       expect(counter.count sentence).to be_a(WordHistogram)
     end
 
-    it 'should ignore punctuation' do
+    it 'ignores punctuation' do
       histogram = counter.count sentence
       expect(histogram.keys).to all(not_match /(\w?[.,\/#!?$%^&*;:{}=`+~()<>"])|(\w[-_])|([-_]\w)/)
     end
 
-    it 'should ignore case, forcing to lowercase' do
+    it 'ignores case, forcing to lowercase' do
       histogram = counter.count sentence
       keys = histogram.keys
       expect(keys).to match_array(keys.map &:downcase)
     end
 
-    it 'should be able to not ignore case' do
+    it 'is able to not ignore case' do
       histogram = counter.count sentence, ignorecase: false
       keys = histogram.keys
 
       expect(keys).not_to match_array(keys.map &:downcase)
     end
 
-    it 'should only include word characters' do
+    it 'only includes word characters' do
       histogram = counter.count sentence
       expect(histogram.keys).to all(match /^[\w'\-_]+$/)
     end
@@ -150,15 +150,15 @@ describe 'WordCounter' do
 
   context 'when counting words from a file' do
 
-    it 'should accept valid file paths' do
+    it 'accepts valid file paths' do
       expect { counter.count_file speech_path }.not_to raise_error
     end
 
-    it 'should raise an error for invalid file paths' do
+    it 'raises an error for invalid file paths' do
       expect { counter.count_file 'NOT_A_VALID_PATH___@@@' }.to raise_error Errno::ENOENT
     end
 
-    it 'should raise an error for closed file objects' do
+    it 'raises an error for closed file objects' do
       expect do
         file = File.open speech_path
         file.close
@@ -167,36 +167,36 @@ describe 'WordCounter' do
       end.to raise_error IOError
     end
 
-    it 'should accept file objects' do
+    it 'accepts file objects' do
       expect { File.open(speech_path) { |file| counter.count_file file } }.not_to raise_error
     end
 
-    it 'should return a histogram' do
+    it 'returns a histogram' do
       expect(counter.count_file speech_path).to be_a(WordHistogram)
     end
 
     context 'which contains a simple text' do
 
-      it 'should ignore punctuation' do
+      it 'ignores punctuation' do
         simple_histogram = counter.count_file simple_test_path
 
         expect(simple_histogram.keys).to all(not_match /(\w?[.,\/#!?$%^&*;:{}=`+~()<>"])|(\w[-_])|([-_]\w)/)
       end
 
-      it 'should ignore case, forcing to lowercase' do
+      it 'ignores case, forcing to lowercase' do
         simple_histogram = counter.count_file simple_test_path
         words = simple_histogram.keys
         expect(words).to match_array words.map(&:downcase)
       end
 
-      it 'should be able to not ignore case' do
+      it 'is able to not ignore case' do
         histogram = counter.count_file simple_test_path, ignorecase: false
         keys = histogram.keys
 
         expect(keys).not_to match_array(keys.map &:downcase)
       end
 
-      it 'should only include word characters' do
+      it 'only includes word characters' do
         simple_histogram = counter.count_file simple_test_path
 
         expect(simple_histogram.keys).to all(match /^[\w'\-_]+$/)
@@ -204,26 +204,26 @@ describe 'WordCounter' do
     end
 
     context 'which contains a presidential speech' do
-      it 'should ignore punctuation' do
+      it 'ignores punctuation' do
         speech_histogram = counter.count_file speech_path
 
         expect(speech_histogram.keys).to all(not_match /(\w?[.,\/#!?$%^&*;:{}=`+~()<>"])|(\w[-_])|([-_]\w)/)
       end
 
-      it 'should ignore case, forcing to lowercase' do
+      it 'ignores case, forcing to lowercase' do
         speech_histogram = counter.count_file speech_path
         words = speech_histogram.keys
         expect(words).to match_array words.map(&:downcase)
       end
 
-      it 'should be able to not ignore case' do
+      it 'is able to not ignore case' do
         histogram = counter.count_file speech_path, ignorecase: false
         keys = histogram.keys
 
         expect(keys).not_to match_array(keys.map &:downcase)
       end
 
-      it 'should only include word characters' do
+      it 'only includes word characters' do
         speech_histogram = counter.count_file speech_path
 
         expect(speech_histogram.keys).to all(match /^[\w'\-_]+$/)
