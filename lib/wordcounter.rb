@@ -1,11 +1,12 @@
+require 'delegate'
 
-class WordHistogram < Hash
+class WordHistogram < SimpleDelegator
   def initialize(*args)
-    super(0, *args)
+    super(Hash.new(0, *args))
   end
 
   def to_pretty_s
-    word_freq_pairs = self.sort
+    word_freq_pairs = self.sort_histogram
 
     word_lengths = word_freq_pairs.map { |word, _| word }.map &:length
     max_length = word_lengths.max
@@ -14,8 +15,8 @@ class WordHistogram < Hash
   end
 
   protected
-  def sort
-    super do |pair1, pair2|
+  def sort_histogram
+    self.sort do |pair1, pair2|
       word1, freq1 = *pair1
       word2, freq2 = *pair2
 
@@ -89,4 +90,4 @@ class WordCounter
 end
 
 # puts 'RANK | WORD | FREQUENCY'
-# puts WordCounter.new.count_file('../speech.txt', ignorecase: false).to_pretty_s
+# puts WordCounter.new.count_file(__FILE__, ignorecase: true).to_pretty_s
